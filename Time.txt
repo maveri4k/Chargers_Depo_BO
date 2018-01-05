@@ -1,0 +1,71 @@
+import random
+import sys
+import math
+import numpy
+
+
+departureTime = []
+avgSpeed = []
+travelTime = []
+arrivalTime = []
+
+numberOfCars = 10
+distance = 80 #km
+
+
+def StartTime(numberOfCars):
+    for i in range(0, numberOfCars):
+        hour = random.randrange(6, 24 , 1)
+        minute = random.randrange(0, 60, 10)
+        time = (hour,minute)
+        departureTime.append(time)
+
+    return departureTime
+
+
+
+print('\nCars departuring at time:')
+print(StartTime(numberOfCars))
+
+sortedDepartureTime = sorted(departureTime, key = lambda time: time[0])
+
+
+print(sortedDepartureTime)
+
+def AverageVehicleSpeed(numberOfCars):
+    for i in range(0, numberOfCars, 1):
+        speed = random.randrange(50, 120, 10)
+        avgSpeed.append(speed)
+    return avgSpeed
+
+
+print('Cars travelling at speed:')
+print(AverageVehicleSpeed(numberOfCars))
+
+
+def TravelTimeCount(numberOfCars, distance, avgSpeed):
+    for i in range(0, numberOfCars, 1):
+        travTime = int((distance/avgSpeed[i])*100)
+        travelTime.append(travTime)     #time in hours
+    return travelTime
+
+print('Cars travel time:')
+print(TravelTimeCount(numberOfCars, distance, avgSpeed))
+
+
+
+
+def ArrivalTimeCount(sortedDepartureTime, numberOfCars, travelTime):
+    for i in range(0, numberOfCars, 1):  #travelTime + departureTime
+        hours    = sortedDepartureTime([i][0])
+        minutes  = sortedDepartureTime([i][1])
+        hours2   = int((travelTime(i))/100)
+        minutes2 = (travelTime(i)/100 - int((travelTime(i))/100)*0.6)
+        arrTime  = (hours + hours2, minutes + minutes2)
+        arrivalTime.append(arrTime)
+
+    return arrivalTime
+
+
+print('Cars will arrive at:')
+print(ArrivalTimeCount(sortedDepartureTime, numberOfCars, travelTime))
