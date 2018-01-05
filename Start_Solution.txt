@@ -1,0 +1,47 @@
+import MakeMap_CalculateTraffic as SA
+import random
+
+def FindTheBiggest(numberOfCities, trafficMatrix) :
+    max = 0
+    listOfTheBiggest = []
+    for i in range(0,numberOfCities-1) :
+        for k in range(i+1,numberOfCities):
+            if trafficMatrix[i][k] > max :
+                max = trafficMatrix[i][k]
+                listOfTheBiggest.append((i,k))
+    return listOfTheBiggest[-numberOfCities//3:]
+
+def GenerateStartSolution(numberOfCities, budget):
+    numberOfChargersTypeStandard = budget // 3;
+    numberOfChargersTypeSuperCharger = budget // 3;
+    numberOfChargersTypeMegaCharger = budget // 4;
+
+    startSolution = []
+    citizensMap = SA.MakeMap(numberOfCities)
+    trafficMatrix = SA.CalculateTraffic(numberOfCities, citizensMap)
+    theBiggest = FindTheBiggest(numberOfCities, trafficMatrix)
+    startSolution.append((theBiggest[0][0],theBiggest[0][1],numberOfChargersTypeMegaCharger,3))
+    startSolution.append((theBiggest[1][0], theBiggest[1][1], numberOfChargersTypeSuperCharger - numberOfChargersTypeSuperCharger // 2, 2))
+    startSolution.append((theBiggest[2][0], theBiggest[2][1], numberOfChargersTypeSuperCharger//2, 2))
+    i = numberOfChargersTypeStandard
+    while i > 0:
+        x = random.randrange(0,numberOfCities)
+        random.seed(random.random())
+        y = random.randrange(0, numberOfCities)
+        if x != theBiggest[0][0] and x != theBiggest[1][0] and x != theBiggest[2][0] and x != y :
+            if y != theBiggest[0][1] and y != theBiggest[1][1] and y != theBiggest[2][1]:
+                startSolution.append((x,y,1,1))
+                i -=1
+            else:
+                continue
+        else:
+            continue
+
+    return startSolution
+
+
+
+print("\nStart Solution:")
+print(GenerateStartSolution(10,12))
+
+

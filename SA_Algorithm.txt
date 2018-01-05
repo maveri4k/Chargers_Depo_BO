@@ -1,0 +1,36 @@
+
+
+
+
+#This could be in a StartFunction:
+T_start = 100
+T_min = 0
+startSolution = GenerateStartSolution()
+tempSolution = startSolution
+optimalSolution = startSolution
+optimalValueOfObjectiveFunction = ObjectiveFunction(startSolution)
+T = T_start
+alfa = 0.97
+
+maxIterations = 100
+
+#Algorithm Schema
+while T > T_min
+k = 0
+    while k < maxIterations :
+        new_tempSolution = ModifySolution(tempSolution)
+        new_tempSolutionValueOfObjectiveFunction = ObjectiveFunction(new_tempSolution)
+        delta = new_tempSolutionValueOfObjectiveFunction - ObjectiveFunction(tempSolution)
+        if delta =< 0 :
+            tempSolution = new_tempSolution
+            if new_tempSolutionValueOfObjectiveFunction < optimalValueOfObjectiveFunction :
+            optimalSolution = new_tempSolution
+            optimalValueOfObjectiveFunction =new_tempSolutionValueOfObjectiveFunction
+        else :
+            random.seed(random.random())
+            rand = random.randrange(0, 100, 1)/100.0
+            if rand < math.e ** (-delta/T):
+                tempSolution = new_tempSolution
+        k += 1
+    T = alfa * T
+print optimalSolution

@@ -1,0 +1,42 @@
+import math
+import random
+import numpy
+
+
+#def GenerateStartSolution.py(numberOfCities,numberOfChargers, citizensMap) :
+ #   startSolution = []
+
+#    return startSolution
+
+def MakeMap(numberOfCities) :
+    citizensMap = []
+    for i in range(0,numberOfCities//4+1,1) :
+        citizensMap.append(random.randrange(1000,10000))
+
+    for i in range(numberOfCities//4+1,numberOfCities//4 + numberOfCities//2,1) :
+        citizensMap.append(random.randrange(100000, 500000))
+
+    for i in range(numberOfCities//4 + numberOfCities//2+1, numberOfCities+1, 1) :
+        citizensMap.append(random.randrange(10000, 100000))
+
+    return citizensMap;
+
+citizensMap = MakeMap(5)
+
+def CalculateTraffic(numberOfCities,citizensMap):
+    trafficMatrix = numpy.zeros((numberOfCities,numberOfCities))
+    for i in range(0,numberOfCities) :
+        for k in range(0, numberOfCities):
+            if i != k :
+                trafficMatrix[i][k] = (citizensMap[i] + citizensMap[k])/100
+    return trafficMatrix
+
+trafficMatrix = CalculateTraffic(5,citizensMap)
+
+print("Citizens Map: ", citizensMap)
+print("\n")
+print("Traffic Matrix: \n")
+print(trafficMatrix)
+print("\n")
+
+
